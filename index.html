@@ -20,53 +20,62 @@
         overflow-x: hidden;
       }
 
-      /* Moving Ambient Background Lights */
-      body::before, body::after {
+      /* Subtle ambient background glow */
+      body::before {
         content: '';
         position: fixed;
-        border-radius: 50%;
-        filter: blur(120px);
-        opacity: 0.15;
-        z-index: -1;
-      }
-      body::before {
         top: -10%; left: -10%;
         width: 300px; height: 300px;
         background: #00e5ff;
-        animation: driftLight 15s infinite alternate ease-in-out;
-      }
-      body::after {
-        bottom: -10%; right: -10%;
-        width: 400px; height: 400px;
-        background: #3b82f6;
-        animation: driftDark 20s infinite alternate ease-in-out;
+        border-radius: 50%;
+        filter: blur(150px);
+        opacity: 0.1;
+        z-index: -1;
       }
 
-      @keyframes driftLight { 100% { transform: translate(30vw, 20vh); } }
-      @keyframes driftDark { 100% { transform: translate(-30vw, -20vh); } }
-
-      /* Avatar with slow rotating radar ring */
+      /* Logo Wrapper & Electric Glowing Line */
       .avatar-wrapper {
         position: relative;
-        display: inline-block;
-        margin-bottom: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 20px;
+        width: 100%;
       }
+      
+      /* The horizontal circuit line behind the logo */
+      .electric-line {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100vw;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, #00e5ff, transparent);
+        z-index: 1;
+        animation: pulseLine 2s infinite alternate ease-in-out;
+      }
+
+      @keyframes pulseLine {
+        0% { 
+          opacity: 0.2; 
+          transform: translate(-50%, -50%) scaleX(0.8); 
+          box-shadow: 0 0 5px #00e5ff; 
+        }
+        100% { 
+          opacity: 1; 
+          transform: translate(-50%, -50%) scaleX(1.1); 
+          box-shadow: 0 0 20px #00e5ff, 0 0 40px #00e5ff; 
+        }
+      }
+
+      /* Keep the logo sharp and glowing */
       .avatar {
         position: relative;
-        border: none !important;
-        background-color: transparent;
-        z-index: 2;
+        border: 2px solid #00e5ff !important;
+        background-color: #020617;
+        box-shadow: 0 0 20px rgba(0, 229, 255, 0.6);
+        z-index: 2; /* Sits above the electric line */
       }
-      .avatar-wrapper::before {
-        content: '';
-        position: absolute;
-        top: -4px; left: -4px; right: -4px; bottom: -4px;
-        border-radius: 50%;
-        border: 2px dashed rgba(0, 229, 255, 0.6);
-        animation: rotateRadar 10s linear infinite;
-        z-index: 1;
-      }
-      @keyframes rotateRadar { 100% { transform: rotate(360deg); } }
 
       /* Text Styling */
       h1 {
@@ -86,18 +95,19 @@
         font-size: 13px;
         letter-spacing: 1.5px;
         text-transform: uppercase;
+        text-shadow: 0 0 10px rgba(0, 229, 255, 0.3);
       }
 
-      /* Modern Frosted Glass Buttons (Flat but alive) */
+      /* Modern Frosted Glass Buttons */
       .button-tech {
         position: relative;
         overflow: hidden;
-        background: rgba(15, 23, 42, 0.5) !important; /* Semi-transparent */
-        backdrop-filter: blur(12px); /* Frosted glass effect */
+        background: rgba(15, 23, 42, 0.5) !important;
+        backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
-        border: 1px solid rgba(0, 229, 255, 0.2) !important; /* Very subtle border */
+        border: 1px solid rgba(0, 229, 255, 0.2) !important;
         color: #ffffff !important;
-        border-radius: 8px !important; /* Sharp, modern corners */
+        border-radius: 8px !important;
         font-weight: 500;
         letter-spacing: 1px;
         text-transform: uppercase;
@@ -106,7 +116,7 @@
         margin-bottom: 16px !important;
       }
 
-      /* Continuous sweeping light reflection across buttons */
+      /* Button Light Sweep */
       .button-tech::before {
         content: '';
         position: absolute;
@@ -118,10 +128,10 @@
       @keyframes scannerSweep {
         0% { left: -100%; }
         50% { left: 200%; }
-        100% { left: 200%; } /* Pauses slightly before sweeping again */
+        100% { left: 200%; }
       }
 
-      /* Hover Effect */
+      /* Button Hover */
       .button-tech:hover {
         border-color: rgba(0, 229, 255, 0.8) !important;
         background: rgba(15, 23, 42, 0.8) !important;
@@ -149,6 +159,7 @@
         <div class="column">
 
             <div class="avatar-wrapper">
+              <div class="electric-line"></div>
               <img class="avatar avatar--rounded" src="images/avatar.png" alt="NetSecure IT Logo">
             </div>
 
