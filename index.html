@@ -12,86 +12,132 @@
     <link rel="stylesheet" href="css/brands.css">
 
     <style>
-      /* Animated shifting gradient background */
-      @keyframes movingBackground {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-      }
-
+      /* Base background */
       body {
-        background: linear-gradient(-45deg, #0b0f19, #1e293b, #001f3f, #050505) !important;
-        background-size: 400% 400% !important;
-        animation: movingBackground 12s ease infinite !important;
+        background-color: #020617 !important; /* Deepest tech black */
         color: #ffffff !important;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        overflow-x: hidden;
       }
 
-      /* Pulsing glow animation for the logo */
-      @keyframes pulseGlow {
-        0% { box-shadow: 0 0 10px rgba(0, 229, 255, 0.4); }
-        50% { box-shadow: 0 0 25px rgba(0, 229, 255, 0.9), 0 0 10px #0072ff; }
-        100% { box-shadow: 0 0 10px rgba(0, 229, 255, 0.4); }
+      /* Moving Ambient Background Lights */
+      body::before, body::after {
+        content: '';
+        position: fixed;
+        border-radius: 50%;
+        filter: blur(120px);
+        opacity: 0.15;
+        z-index: -1;
+      }
+      body::before {
+        top: -10%; left: -10%;
+        width: 300px; height: 300px;
+        background: #00e5ff;
+        animation: driftLight 15s infinite alternate ease-in-out;
+      }
+      body::after {
+        bottom: -10%; right: -10%;
+        width: 400px; height: 400px;
+        background: #3b82f6;
+        animation: driftDark 20s infinite alternate ease-in-out;
       }
 
+      @keyframes driftLight { 100% { transform: translate(30vw, 20vh); } }
+      @keyframes driftDark { 100% { transform: translate(-30vw, -20vh); } }
+
+      /* Avatar with slow rotating radar ring */
+      .avatar-wrapper {
+        position: relative;
+        display: inline-block;
+        margin-bottom: 10px;
+      }
       .avatar {
-        border: 3px solid #00e5ff;
-        background-color: #1a1a1a;
-        animation: pulseGlow 2.5s infinite;
+        position: relative;
+        border: none !important;
+        background-color: transparent;
+        z-index: 2;
       }
+      .avatar-wrapper::before {
+        content: '';
+        position: absolute;
+        top: -4px; left: -4px; right: -4px; bottom: -4px;
+        border-radius: 50%;
+        border: 2px dashed rgba(0, 229, 255, 0.6);
+        animation: rotateRadar 10s linear infinite;
+        z-index: 1;
+      }
+      @keyframes rotateRadar { 100% { transform: rotate(360deg); } }
 
-      /* Brighter, bolder text */
+      /* Text Styling */
       h1 {
         color: #ffffff !important;
-        text-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
         margin-bottom: 5px !important;
         font-weight: 800;
         letter-spacing: 0.5px;
       }
-
       p {
-        color: #e2e8f0 !important;
+        color: #94a3b8 !important;
         font-size: 15px;
         margin-bottom: 30px !important;
         line-height: 1.6;
       }
-
       .tagline {
         color: #00e5ff !important;
-        font-weight: bold;
-        font-size: 14px;
-        letter-spacing: 1px;
+        font-size: 13px;
+        letter-spacing: 1.5px;
         text-transform: uppercase;
       }
 
-      /* Solid, vibrant pill-shaped buttons with depth */
+      /* Modern Frosted Glass Buttons (Flat but alive) */
       .button-tech {
-        background: linear-gradient(90deg, #0052d4, #4364f7, #6fb1fc) !important;
-        border: none !important;
+        position: relative;
+        overflow: hidden;
+        background: rgba(15, 23, 42, 0.5) !important; /* Semi-transparent */
+        backdrop-filter: blur(12px); /* Frosted glass effect */
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(0, 229, 255, 0.2) !important; /* Very subtle border */
         color: #ffffff !important;
-        border-radius: 50px !important; /* Makes them rounded pill shapes */
-        font-weight: 700;
+        border-radius: 8px !important; /* Sharp, modern corners */
+        font-weight: 500;
         letter-spacing: 1px;
         text-transform: uppercase;
-        box-shadow: 0 4px 15px rgba(67, 100, 247, 0.4);
-        transition: all 0.3s ease-in-out !important;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3) !important;
+        transition: all 0.3s ease !important;
         margin-bottom: 16px !important;
       }
 
-      /* Button Hover/Tap Effect (Lifts up and glows brighter) */
+      /* Continuous sweeping light reflection across buttons */
+      .button-tech::before {
+        content: '';
+        position: absolute;
+        top: 0; left: -100%;
+        width: 50%; height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(0, 229, 255, 0.15), transparent);
+        animation: scannerSweep 3s infinite linear;
+      }
+      @keyframes scannerSweep {
+        0% { left: -100%; }
+        50% { left: 200%; }
+        100% { left: 200%; } /* Pauses slightly before sweeping again */
+      }
+
+      /* Hover Effect */
       .button-tech:hover {
-        transform: translateY(-4px) scale(1.02);
-        box-shadow: 0 8px 25px rgba(0, 229, 255, 0.6);
+        border-color: rgba(0, 229, 255, 0.8) !important;
+        background: rgba(15, 23, 42, 0.8) !important;
+        box-shadow: 0 0 20px rgba(0, 229, 255, 0.2) !important;
+        transform: translateY(-2px);
       }
       
-      /* Pure white icons for maximum contrast */
       .button-tech .icon {
         filter: brightness(0) invert(1);
+        position: relative;
+        z-index: 2;
       }
 
       .footer-text {
         text-align: center; 
-        color: #64748b; 
+        color: #475569; 
         font-size: 12px; 
         margin-top: 40px;
       }
@@ -102,7 +148,9 @@
     <div class="container">
         <div class="column">
 
-            <img class="avatar avatar--rounded" src="images/avatar.png" alt="NetSecure IT Logo">
+            <div class="avatar-wrapper">
+              <img class="avatar avatar--rounded" src="images/avatar.png" alt="NetSecure IT Logo">
+            </div>
 
             <h1>
               <div>Sanju Thakur</div>
